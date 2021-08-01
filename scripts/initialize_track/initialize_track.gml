@@ -7,6 +7,7 @@ function initialize_track(member,trackname,pres,level){
 	else {
 		++level
 	}
+	
 	ds_map_add(member.inventory, trackname, ds_grid_create(level, 4));
 	ds_map_add(member.invPres, trackname, pres);
 }

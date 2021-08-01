@@ -1,4 +1,4 @@
-#macro mAPPEAR_COORDS x - (appear_width / 2), y - (appear_height / 2), x + (appear_width / 2), y + (appear_height / 2)
+#macro mBATTLE_PARTY_MEM_APPEAR_COORDS x - (appear_width / 2), y - (appear_height / 2), x + (appear_width / 2), y + (appear_height / 2)
 
 inventory = ds_map_create();
 invPres = ds_map_create();
@@ -8,6 +8,7 @@ ds_list_add(miscInv, "Pass")
 ds_list_add(miscInv, "Rain")
 
 reg_space = 0;
+
 /* inventory:
 each key is named after a track and contains this party member's track data in a DS grid
 the member's track level is represented by the grid width

@@ -6,8 +6,10 @@ function is_highlighting_weapon(){
 			hovering_row > -1 &&
 			hovering_row < row_amount);
 }
+
 function is_highlighting_misc(){
 	var _actionAmt = ds_list_size(viewing_mem.miscInv)
+	
 	return (hovering_misc &&
 			hovering_row > -1 &&
 			hovering_row < _actionAmt);

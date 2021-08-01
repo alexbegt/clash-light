@@ -48,16 +48,13 @@ hovering_enemy = -1;
 var _tempNames = array_create(temp_AmtParty, "Void")
 var _pmNamesFile = file_text_open_read("placeholder_pmNames.txt");
 var _n = 0;
+
 while(!file_text_eoln(_pmNamesFile)) {
 	_tempNames[_n++] = string_replace(file_text_readln(_pmNamesFile), "\r\n", "");
 }
+
 file_text_close(_pmNamesFile)
 
-var _tempTracks = array_create(temp_AmtParty, "sound")
-_tempTracks[0] = "squirt";
-_tempTracks[1] = "zap";
-_tempTracks[2] = "throw";
-_tempTracks[3] = "lure";
 //temp party filler
 for (i = 0; i < temp_AmtParty; ++i) {
 	//create party member
@@ -65,44 +62,16 @@ for (i = 0; i < temp_AmtParty; ++i) {
 	//assign name and place
 	_addToParty.given_name = _tempNames[i];
 	_addToParty.reg_space = i;
-	//give 1 of a level 8 for their assigned track
-	/*
-	var _track = _tempTracks[i];
-	initialize_track(_addToParty, _track);
-	add_weapon(_addToParty, _track, 7, 1)
-	*/
-	//temp grant all tracks
+	
 	var _track = ""
+	
 	for (t = 0; t < ds_map_size(mWEP.wTracks); ++t) {
 		_track = mWEP.trackNames[| t]
 		initialize_track(_addToParty, _track, true);
 		add_weapon(_addToParty, _track, 7, 1)
 	}
+	
 	refresh_tracks(_addToParty, 1);
 	//register party member
 	reg_party[| i] = _addToParty;
 }
-//temp enemy filler
-/*for (i = 0; i < temp_AmtEnemy; ++i) {
-	//create enemy
-	var _addEnemy = instance_create_layer(0, 92, "Instances", par_battle_enemy)
-	//assign name and place
-	_addEnemy.given_name = "Suit";
-	_addEnemy.reg_space = i;
-	//register enemy
-	reg_enemy[| i] = _addEnemy;
-}
-refresh_enemy_row()
-//temp tracks
-/*
-initialize_track(reg_party[| 0], "drop", 7)
-ds_grid_set(reg_party[| 0].inventory[? "drop"], 7, 0, 1)
-add_weapon(reg_party[| 0], "drop", 3, 15)
-refresh_tracks(reg_party[| 0]);
-initialize_track(reg_party[| 1], "throw", 6)
-ds_grid_set(reg_party[| 1].inventory[? "throw"], 6, 0, 2)
-refresh_tracks(reg_party[| 1]);
-initialize_track(reg_party[| 1], "trap", 3)
-ds_grid_set(reg_party[| 1].inventory[? "trap"], 3, 0, 5)
-refresh_tracks(reg_party[| 1]);
-*/

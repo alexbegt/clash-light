@@ -2,7 +2,9 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function refresh_tracks(member, hasPrestige){
 	ds_map_clear(member.ownedtracks)
+	
 	var _trackNames = mWEP.trackNames
+	
 	for (var t = 0; t < ds_list_size(_trackNames); ++t) {
 		//check each track
 		var _readTrack = _trackNames[| t];

@@ -1,5 +1,6 @@
 var _active = false;
 var _useSprites = global.use_sprites
+
 for (var t = 0; t < row_amount; ++t) {
 	var _readTrack = mWEP.trackNames[| t]
 	//set track header
@@ -18,6 +19,7 @@ for (var t = 0; t < row_amount; ++t) {
 	};
 	//draw buttons
 	var _trackExists = ds_map_exists(viewing_mem.inventory, _readTrack);
+	
 	if (_trackExists) {
 		//set to track color
 		var _trackColor = mWEP.trackColors[? _readTrack]
@@ -31,13 +33,14 @@ for (var t = 0; t < row_amount; ++t) {
 		//set button color
 		var _buttonColor = merge_color(c_blue, _trackColor, 0.5)
 		var _trackLength = ds_grid_width(viewing_mem.inventory[? _readTrack])
+		
 		switch (check_for_prestige(viewing_mem, _readTrack)) {
 			case true:
-			var _presButton = 1;
-			break;
+				var _presButton = 1;
+				break;
 			case false:
-			var _presButton = 0;
-			break
+				var _presButton = 0;
+				break
 		}
 		for (var i = 0; i < _trackLength; ++i){
 			//draw each weapon, quantity, and availability
@@ -255,69 +258,78 @@ if (_active) {
 	draw_sprite_ext(spr_button_wep, _activePres + 2, mACTIVE_CENTER, _buttonScale, _buttonScale, 0, _activeColor, 1)
 	var _textColor = c_black
 	var _textOutline = _activeColor
+	
 	switch (_useSprites) {
 		case false:
-		var _text = "Lv. " + string(hovering_column + 1)
-		draw_text_outlined(mACTIVE_CENTER, _text, _textOutline, _textColor)
-		break;
-		case true:
-		var _assetName = "spr_" + hovering_trackName + "_ttcc"
-		var _spriteAsset = asset_get_index(_assetName)
-		var _validSprite = false;
-		if (_spriteAsset > -1) {
-			if (sprite_get_number(_spriteAsset) > hovering_column) {
-				_validSprite = true;
-				var _spriteSize = sprite_get_height(_spriteAsset);
-				draw_sprite_outlined_ext(_spriteAsset, hovering_column, mACTIVE_CENTER, (button_height / _spriteSize) * (_buttonScale * 2), (button_height / _spriteSize) * (_buttonScale * 2), 0, c_white, 1, _spriteSize / button_height)
-			}
-		}
-		if (!_validSprite) {
 			var _text = "Lv. " + string(hovering_column + 1)
 			draw_text_outlined(mACTIVE_CENTER, _text, _textOutline, _textColor)
-		}
-		break;
+			break;
+		case true:
+			var _assetName = "spr_" + hovering_trackName + "_ttcc"
+			var _spriteAsset = asset_get_index(_assetName)
+			var _validSprite = false;
+		
+			if (_spriteAsset > -1) {
+				if (sprite_get_number(_spriteAsset) > hovering_column) {
+					_validSprite = true;
+					var _spriteSize = sprite_get_height(_spriteAsset);
+					draw_sprite_outlined_ext(_spriteAsset, hovering_column, mACTIVE_CENTER, (button_height / _spriteSize) * (_buttonScale * 2), (button_height / _spriteSize) * (_buttonScale * 2), 0, c_white, 1, _spriteSize / button_height)
+				}
+			}
+		
+			if (!_validSprite) {
+				var _text = "Lv. " + string(hovering_column + 1)
+				draw_text_outlined(mACTIVE_CENTER, _text, _textOutline, _textColor)
+			}
+			break;
 	}
+	
 	//draw wep details
 	draw_set_alpha(1)
 	var _textColor = c_white
 	var _textOutline = c_black
 	var _wepDetails = mWEP.wTracks[? _activeTrack]
-	var _wepText = _wepDetails[# hovering_column, 0] +
-	" | "
+	var _wepText = _wepDetails[# hovering_column, 0] + " | "
 	var _wepDamage = real(_wepDetails[# hovering_column, 1])
+	
 	if (_activeTrack == "zap") {
 		_wepText += display_zap_factor(viewing_mem, _wepDamage);
 	}
 	else {
 		_wepText += string(_wepDamage);
 	}
+	
 	if (check_for_prestige(viewing_mem, _activeTrack)) {
 		_wepText += display_prestige_bonus(_activeTrack, _wepDamage)
 	}
+	
 	switch (_activeTrack) {
 		case "lure":
-		_wepText += " Turns"
-		break;
+			_wepText += " Turns"
+			break;
 		default:
-		_wepText += " Damage"
-		break;
+			_wepText += " Damage"
+			break;
 		case "squirt":
-		var _wepSoak = real(_wepDetails[# hovering_column, 5]);
-		_wepText += " Damage | ";
-		_wepText += display_squirt_soak(viewing_mem, _wepSoak)
-		break;
+			var _wepSoak = real(_wepDetails[# hovering_column, 5]);
+			_wepText += " Damage | ";
+			_wepText += display_squirt_soak(viewing_mem, _wepSoak)
+			break;
 	}
+	
 	switch (_wepDetails[# hovering_column, 4]) {
 		case -2:
-		_wepText += " | Target All"
-		break;
+			_wepText += " | Target All"
+			break;
 		default:
-		_wepText += " | Target Single"
-		break;
+			_wepText += " | Target Single"
+			break;
 	}
+	
 	draw_set_color(_activeColor)
 	draw_text_outlined(mHEADER_CENTER_X, mean(_descBack.y1,_descBack.y2), _wepText, _textOutline, _textColor)
 }
+
 //draw all prestige toggle button
 var _pres = {
 	x1 : 4 + (x - (row_length * (button_width / 2)) + (row_length * button_width)),
@@ -334,13 +346,16 @@ repeat (row_amount) {
 		break;
 	}
 }
+
 draw_roundrect(mPRES_COORDS, _anyPres);
+
 if (_anyPres) {
 	draw_sprite_ext(ico_pres, 0, mPRES_CENTER, 1, 1, 0, c_white, 1)
 }
 else {
 	draw_sprite_ext(ico_pres, 0, mPRES_CENTER, 1, 1, 0, c_black, 1);
 }
+
 //draw all track toggle button
 var _pres = {
 	x1 : -4 + (x - (button_width / 2) - (button_width * (row_length / 2))),
@@ -350,12 +365,14 @@ var _pres = {
 };
 var _i = 0;
 var _anyTrack = false;
+
 repeat (row_amount) {
 	if (_anyTrack = !ds_map_exists(viewing_mem.inventory, mWEP.trackNames[| _i++])) {
 		_anyTrack = true;
 		break;
 	}
 }
+
 if (_anyTrack) {
 	draw_sprite_outlined(ico_check, 0, mPRES_CENTER, 1)
 }

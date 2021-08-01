@@ -12,21 +12,23 @@ else {
 	activeAttack = ds_priority_delete_min(attackQueue)
 	//run attack if target is alive or chaining the same track
 	var _targetAlive = (_prevTrack == activeAttack.trackname);
+	
 	switch (activeAttack.target) {
 		case -2:
-		var _e = 0;
-		repeat (ds_list_size(mBATTLE.reg_enemy)) {
-			if (mBATTLE.reg_enemy[| _e++].currentHP > 0) {
+			var _e = 0;
+			repeat (ds_list_size(mBATTLE.reg_enemy)) {
+				if (mBATTLE.reg_enemy[| _e++].currentHP > 0) {
+					_targetAlive = true;
+				}
+			}
+			break;
+		default:
+			if (mBATTLE.reg_enemy[| activeAttack.target].currentHP > 0) {
 				_targetAlive = true;
 			}
-		}
-		break;
-		default:
-		if (mBATTLE.reg_enemy[| activeAttack.target].currentHP > 0) {
-			_targetAlive = true;
-		}
-		break;
+			break;
 	}
+	
 	if (_targetAlive && timeline_exists(mWEP.trackTimelines[? activeAttack.trackname])) {
 		timeline_index = mWEP.trackTimelines[? activeAttack.trackname];
 		timeline_position = 0;
@@ -36,6 +38,7 @@ else {
 	else {
 		alarm[0] += attackAnimTime;
 	}
+	
 	++attackNum;
 	++damageOrder;
 }

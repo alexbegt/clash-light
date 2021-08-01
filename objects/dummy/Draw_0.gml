@@ -1,5 +1,6 @@
 draw_text(0,0,hovering_row)
 var i = 0;
+
 repeat (15) {
 	var _button = {
 		x1 : x + (i * button_width),
@@ -7,6 +8,7 @@ repeat (15) {
 		x2 : x + (button_width + (i * button_width)),
 		y2 : y + (button_height / 2) + button_height + ((button_height)),
 	};
+	
 	draw_set_color(c_blue)
 	draw_set_alpha(0.5)
 	draw_roundrect(mBUTTON_COORDS, false)

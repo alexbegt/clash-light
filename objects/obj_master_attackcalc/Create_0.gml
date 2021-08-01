@@ -16,10 +16,12 @@ for (var i = 0; i < ds_list_size(mBATTLE.reg_party); ++i) {
 	}
 	else _choices[i] = script_execute(asset_get_index("act_" + _attacker.nextAction), _attacker);
 }
+
 //order attacks in priority queue
 attackCount = 0;
 attackQueue = ds_priority_create();
 var _trackAmount = ds_list_size(mWEP.trackNames);
+
 for (var i = 0; i < _trackAmount; ++i) {
 	var _attackTrack = mWEP.trackNames[| i];
 	//check current track index to see if an attacker is using that track, then add their attack to queue
@@ -27,6 +29,7 @@ for (var i = 0; i < _trackAmount; ++i) {
 		if (_choices[c] == -1) {
 			continue;
 		}
+		
 		if (_choices[c].trackname = _attackTrack) {
 			//priority number: track, weapon, order
 			ds_priority_add(attackQueue, _choices[c], (i*1000) + (_choices[c].level * 10) + (ds_list_size(mBATTLE.reg_party) - c));
@@ -34,6 +37,7 @@ for (var i = 0; i < _trackAmount; ++i) {
 		}
 	}
 }
+
 //begin attack sequence
 comboScaled = array_create(ds_list_size(mBATTLE.reg_enemy), comboBase)
 alarm[0] = battleTick

@@ -95,6 +95,7 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"65edb1c3-b4bd-45be-a0bc-3e7edebb5c85","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "ttcc_spr",
     "path": "folders/Sprites/ttcc_spr.yy",

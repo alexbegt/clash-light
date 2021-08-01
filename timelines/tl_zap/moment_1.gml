@@ -1,5 +1,7 @@
 var _jumpFrom = mBATTLE.reg_enemy[| activeAttack.target];
+
 wep_zap_base(activeAttack);
+
 if (ds_queue_empty(jumpQueue)) {
 	calcCombo();
 	alarm[0] += attackAnimTime;
